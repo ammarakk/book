@@ -1,0 +1,101 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env*
+*.env
+.env.local
+.env.*.local
+dist/
+build/
+*.egg-info/
+.eggs/
+.nyc_output/
+coverage/
+
+# Docusaurus
+.docusaurus/
+.cache/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+nox/
+.hypothesis/
+
+# FastAPI/Backend
+*.db
+*.db-journal
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment specific
+.env.local
+.env.dev
+.env.prod
+
+# Testing
+.pytest_cache/
+.coverage/
+htmlcov/
+.cov/
+coverage.xml
+junit.xml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+*:encryptable
+*.nfs*
+*.swp
+*.swo
+*~
+
+# Secrets and API keys (should not be in version control)
+secrets/
+*.key
+*.pem
+*.crt
+*.cert
+*.secret
+
+# Build outputs
+public/
+docs-build/
+out/
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Ollama
+ollama_models/
+
+# Sensitive files
+config.json
