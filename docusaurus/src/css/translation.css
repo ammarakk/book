@@ -1,0 +1,132 @@
+/* Translation Component Styles */
+
+.translate-toggle {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.translate-toggle:hover {
+  background-color: #45a049;
+}
+
+.translate-toggle.disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.translate-toggle.disabled:hover {
+  background-color: #cccccc;
+}
+
+.translated-content-container {
+  margin-top: 20px;
+}
+
+.translated-content-item {
+  background-color: #f9f9f9;
+  border-left: 4px solid #4CAF50;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 0 4px 4px 0;
+  position: relative;
+}
+
+.translated-content-item.translated-text {
+  border-left-color: #2196F3; /* Blue for text translations */
+}
+
+.translated-content-item.translated-code_block {
+  border-left-color: #FF9800; /* Orange for code block translations */
+}
+
+.translation-indicator {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.translated-text {
+  margin-top: 20px;
+}
+
+.content-type {
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.translated-content-loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.translated-content-error {
+  text-align: center;
+  padding: 20px;
+  color: #f44336;
+  font-weight: bold;
+}
+
+/* Expandable sections for translated content */
+.expandable-section {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.expandable-header {
+  background-color: #f1f1f1;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expandable-header::after {
+  content: '\02795'; /* Unicode character for "plus" */
+  font-size: 12px;
+  color: #777;
+}
+
+.expandable-content {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.expandable-section.active .expandable-content {
+  padding: 15px;
+  max-height: 500px; /* Adjust as needed */
+}
+
+.expandable-section.active .expandable-header::after {
+  content: '\02796'; /* Unicode character for "minus" */
+}
+
+/* RTL support for Urdu text */
+.urdu-text {
+  direction: rtl;
+  text-align: right;
+}

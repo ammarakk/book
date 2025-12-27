@@ -12,6 +12,35 @@ description: "Task list template for feature implementation"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
+## Constitution Compliance Check
+
+### Phase Isolation Check
+- [ ] Only current phase tasks are included
+- [ ] No future phase tasks are included
+- [ ] Previous phase is locked before starting current phase tasks
+
+### No Scope Creep Check
+- [ ] Tasks belong only to their assigned phase
+- [ ] No "small additions" from future phases
+- [ ] No refactors after phase lock
+
+### AI-Friendly Structure Check
+- [ ] Clear specs before planning
+- [ ] Clear plans before implementation
+- [ ] Clear verification before locking
+
+### Deterministic Execution Check
+- [ ] Every phase produces verifiable outputs
+- [ ] Ambiguity is resolved in Specify, not Implement
+
+### Mandatory Phase Execution Lifecycle Check
+- [ ] Follows Specify → Plan → Implement → Verify → Lock sequence
+- [ ] No phase overlap allowed
+
+### Locked Project Phases Check
+- [ ] Project phases completed in locked order
+- [ ] No skipping phases
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
@@ -25,21 +54,21 @@ description: "Task list template for feature implementation"
 - **Mobile**: `api/src/`, `ios/src/` or `android/src/`
 - Paths shown below assume single project - adjust based on plan.md structure
 
-<!-- 
+<!--
   ============================================================================
   IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
-  
+
   The /sp.tasks command MUST replace these with actual tasks based on:
   - User stories from spec.md (with their priorities P1, P2, P3...)
   - Feature requirements from plan.md
   - Entities from data-model.md
   - Endpoints from contracts/
-  
+
   Tasks MUST be organized by user story so each story can be:
   - Implemented independently
   - Tested independently
   - Delivered as an MVP increment
-  
+
   DO NOT keep these sample tasks in the generated tasks.md file.
   ============================================================================
 -->
@@ -192,20 +221,6 @@ Examples of foundational tasks (adjust based on your project):
 - All tests for a user story marked [P] can run in parallel
 - Models within a story marked [P] can run in parallel
 - Different user stories can be worked on in parallel by different team members
-
----
-
-## Parallel Example: User Story 1
-
-```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
-
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
-```
 
 ---
 

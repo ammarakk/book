@@ -1,55 +1,45 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT
+Version change: N/A → 1.0.0
+Modified principles: N/A (new constitution)
+Added sections: All principles and sections
+Removed sections: N/A
+Templates requiring updates: 
+- .specify/templates/plan-template.md ✅ updated
+- .specify/templates/spec-template.md ✅ updated  
+- .specify/templates/tasks-template.md ✅ updated
+- .specify/templates/commands/*.md ✅ updated
+Follow-up TODOs: None
+-->
+
+# Physical AI & Humanoid Robotics – AI/Spec-Driven Interactive Book Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Phase Isolation
+Work is executed strictly phase-by-phase. Only one phase is 'open' at a time. No future phase features may be implemented early. Once a phase is locked, it must not be modified.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### No Scope Creep
+Features belong only to their assigned phase. 'Small additions' from future phases are forbidden. Refactors after phase lock are not allowed.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### AI-Friendly Structure
+Clear specs before planning. Clear plans before implementation. Clear verification before locking.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Deterministic Execution
+Every phase must produce verifiable outputs. Ambiguity is resolved in Specify, not Implement.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Mandatory Phase Execution Lifecycle
+Each phase MUST follow this exact sequence: Specify → Plan → Implement → Verify → Lock. No phase overlap is allowed.
 
-### [PRINCIPLE_6_NAME]
+### Locked Project Phases
+Project phases must be completed in locked order: Phase 1 (Book Foundation), Phase 2 (AI Chatbot), Phase 3 (Authentication), Phase 4 (Personalization), Phase 5 (Translation).
 
+## Content Scope
+Topic: Physical AI & Humanoid Robotics. Modules: 1. The Robotic Nervous System (ROS 2), 2. The Digital Twin (Gazebo & Unity), 3. The AI-Robot Brain (NVIDIA Isaac™), 4. Vision-Language-Action (VLA), 5. Capstone: Autonomous Humanoid. Includes: Weekly breakdown, Learning outcomes, Hardware requirements, On-prem vs cloud lab architectures, Real-world robot references.
 
-[PRINCIPLE__DESCRIPTION]
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Tech Stack
+Frontend: Docusaurus, Custom React components, Neon robotic theme, Animations (CSS / Framer Motion). Backend: FastAPI, Neon Serverless PostgreSQL, Qdrant Cloud (Free Tier). AI: Claude Code (orchestrator), Ollama (LLM for chatbot), Claude Code Subagents, Agent Skills. Auth: BetterAuth, JWT-based sessions.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+Constitution is immutable. Each phase requires: Specify → Plan → Implement → Verify → Lock. No phase overlap. No silent changes. No 'quick fixes' after lock. All AI behavior must follow spec boundaries.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-01-04 | **Last Amended**: 2025-01-04

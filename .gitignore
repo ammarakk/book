@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage/
+.pytest_cache/
+*.pytest
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Documentation
+docs/build/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docusaurus
+.build/
+.docusaurus/
+.vercel/
+
+# Backend specific
+dist/
+*.egg-info/
+htmlcov/
+.coverage
+
+# Sensitive data
+secrets/
+credentials.json

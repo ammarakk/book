@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: Physical AI & Humanoid Robotics Book Chatbot API
+  description: API for the AI-powered chatbot that answers questions from the Physical AI & Humanoid Robotics book content
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.physical-ai-book.com
+    description: Production server
+
+paths:
+  /chat:
+    post:
+      summary: Submit a question to the chatbot
+      description: Sends a user question to the chatbot and receives an answer based on the book content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Successful response with the chatbot's answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Bad request - invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chat/selection:
+    post:
+      summary: Submit a question with selected text context
+      description: Sends a user question with selected text to the chatbot, which will only answer based on the selected text
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectionChatRequest'
+      responses:
+        '200':
+          description: Successful response with the chatbot's answer based only on selected text
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Bad request - invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found in book - the answer could not be found in the selected text
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the health status of the chatbot service
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '500':
+          description: Service is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          description: The user's question
+          example: "What is ROS 2 and how does it differ from ROS 1?"
+        sessionId:
+          type: string
+          description: Optional session identifier for tracking conversation history
+          example: "sess-abc123xyz"
+      example:
+        question: "What is ROS 2 and how does it differ from ROS 1?"
+        sessionId: "sess-abc123xyz"
+
+    SelectionChatRequest:
+      type: object
+      required:
+        - question
+        - selectedText
+      properties:
+        question:
+          type: string
+          description: The user's question
+          example: "Explain the concept mentioned in the selected text"
+        selectedText:
+          type: string
+          description: The text that the user has selected
+          example: "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It addresses many of the limitations of ROS 1, particularly in the areas of real-time support, determinism, and multi-robot systems."
+        sessionId:
+          type: string
+          description: Optional session identifier for tracking conversation history
+          example: "sess-abc123xyz"
+      example:
+        question: "Explain the concept mentioned in the selected text"
+        selectedText: "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It addresses many of the limitations of ROS 1, particularly in the areas of real-time support, determinism, and multi-robot systems."
+        sessionId: "sess-abc123xyz"
+
+    ChatResponse:
+      type: object
+      required:
+        - answer
+        - sources
+        - confidence
+      properties:
+        answer:
+          type: string
+          description: The chatbot's answer to the question
+          example: "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It addresses many of the limitations of ROS 1, particularly in the areas of real-time support, determinism, and multi-robot systems. ROS 2 uses DDS (Data Distribution Service) as its underlying communication layer, which provides better support for real-time systems and improved security compared to ROS 1's custom TCP/UDP implementation."
+        sources:
+          type: array
+          items:
+            type: string
+          description: List of source documents/chapters that informed the answer
+          example: ["/docs/module-1-robotic-nervous-system/index.mdx", "/docs/module-1-robotic-nervous-system/chapter-1-ros2-architecture.mdx"]
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Confidence level of the response (0-1 scale)
+          example: 0.95
+        sessionId:
+          type: string
+          description: Session identifier for tracking conversation history
+          example: "sess-abc123xyz"
+      example:
+        answer: "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It addresses many of the limitations of ROS 1, particularly in the areas of real-time support, determinism, and multi-robot systems. ROS 2 uses DDS (Data Distribution Service) as its underlying communication layer, which provides better support for real-time systems and improved security compared to ROS 1's custom TCP/UDP implementation."
+        sources: ["/docs/module-1-robotic-nervous-system/index.mdx", "/docs/module-1-robotic-nervous-system/chapter-1-ros2-architecture.mdx"]
+        confidence: 0.95
+        sessionId: "sess-abc123xyz"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code
+          example: "QUERY_FAILED"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The query could not be processed due to an internal error"
+        details:
+          type: object
+          description: Optional additional error details
+          example: {"internal_error": "Connection to Ollama failed"}
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          description: Overall health status
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the health check
+          example: "2025-01-04T10:00:00Z"
+        services:
+          type: object
+          description: Health status of individual services
+          properties:
+            ollama:
+              type: string
+              enum: [available, unavailable]
+              example: "available"
+            qdrant:
+              type: string
+              enum: [available, unavailable]
+              example: "available"
+            postgres:
+              type: string
+              enum: [available, unavailable]
+              example: "available"

@@ -1,0 +1,166 @@
+/* Personalization Styles */
+
+.personalize-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.personalize-button:hover {
+  background-color: #45a049;
+}
+
+.personalize-button.disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.personalize-button.disabled:hover {
+  background-color: #cccccc;
+}
+
+.personalized-content-container {
+  margin-top: 20px;
+}
+
+.personalized-content-item {
+  background-color: #f9f9f9;
+  border-left: 4px solid #4CAF50;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 0 4px 4px 0;
+  position: relative;
+}
+
+.personalized-content-item.personalized-explanation {
+  border-left-color: #2196F3; /* Blue for explanations */
+}
+
+.personalized-content-item.personalized-example {
+  border-left-color: #FF9800; /* Orange for examples */
+}
+
+.personalized-content-item.personalized-difficulty-adjustment {
+  border-left-color: #9C27B0; /* Purple for difficulty adjustments */
+}
+
+.personalization-indicator {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.personalized-text {
+  margin-top: 20px;
+}
+
+.personalization-type {
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.personalized-content-loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.personalized-content-error {
+  text-align: center;
+  padding: 20px;
+  color: #f44336;
+  font-weight: bold;
+}
+
+/* Expandable sections for personalized content */
+.expandable-section {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.expandable-header {
+  background-color: #f1f1f1;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.expandable-header:hover {
+  background-color: #e8e8e8;
+}
+
+.expandable-header::after {
+  content: '\02795'; /* Unicode character for "plus" */
+  font-size: 12px;
+  color: #777;
+  transition: transform 0.3s ease;
+}
+
+.expandable-content {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.expandable-section.active .expandable-content {
+  padding: 15px;
+  max-height: 500px; /* Adjust as needed */
+}
+
+.expandable-section.active .expandable-header::after {
+  content: '\02796'; /* Unicode character for "minus" */
+  transform: rotate(180deg);
+}
+
+/* Smooth animations for personalized content reveal */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.personalized-content-item {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Animation for expanding/collapsing sections */
+.expandable-content {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
+
+.expandable-section:not(.active) .expandable-content {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { max-height: 500px; opacity: 1; }
+  to { max-height: 0; opacity: 0; }
+}

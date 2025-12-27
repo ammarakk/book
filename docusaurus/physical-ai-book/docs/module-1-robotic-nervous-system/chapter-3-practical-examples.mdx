@@ -1,0 +1,213 @@
+---
+sidebar_label: 'Chapter 3: Practical Examples'
+sidebar_position: 4
+---
+
+# Chapter 3: Practical Examples
+
+This chapter provides practical examples of ROS 2 concepts in action, demonstrating how to build real robotic systems.
+
+## Overview
+
+In this chapter, we'll build a complete example of a simple robot system using the concepts we've learned. We'll create a robot that can receive commands, navigate to locations, and report its status.
+
+## Learning Objectives
+
+By the end of this chapter, you will understand:
+- How to combine multiple ROS 2 concepts in a single application
+- Best practices for organizing ROS 2 code
+- How to create a complete robotic system
+
+## Table of Contents
+
+- [Robot System Overview](#robot-system-overview)
+- [Implementation](#implementation)
+- [Testing](#testing)
+- [Summary](#summary)
+
+## Robot System Overview
+
+Our example robot system will include:
+
+1. A navigation system that can move to specified locations
+2. A sensor system that reports environmental data
+3. A command interface for controlling the robot
+4. A status reporting system
+
+## Implementation
+
+Let's implement the robot system step by step:
+
+### 1. Robot Node Structure
+
+```python
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+from geometry_msgs.msg import Point
+from example_interfaces.srv import Trigger
+
+class RobotNode(Node):
+    def __init__(self):
+        super().__init__('robot_node')
+        
+        # Publishers
+        self.status_publisher = self.create_publisher(String, 'robot_status', 10)
+        self.location_publisher = self.create_publisher(Point, 'robot_location', 10)
+        
+        # Subscribers
+        self.command_subscriber = self.create_subscription(
+            String,
+            'robot_commands',
+            self.command_callback,
+            10
+        )
+        
+        # Services
+        self.move_service = self.create_service(
+            Trigger,
+            'move_to_location',
+            self.move_to_location_callback
+        )
+        
+        # Initialize robot state
+        self.current_location = Point(x=0.0, y=0.0, z=0.0)
+        self.status = "Idle"
+        
+        # Timer for periodic status updates
+        self.timer = self.create_timer(1.0, self.publish_status)
+    
+    def command_callback(self, msg):
+        command = msg.data
+        self.get_logger().info(f'Received command: {command}')
+        
+        if command == 'start':
+            self.status = "Active"
+            self.get_logger().info('Robot started')
+        elif command == 'stop':
+            self.status = "Idle"
+            self.get_logger().info('Robot stopped')
+        elif command.startswith('move_to:'):
+            # Parse location from command
+            try:
+                coords = command.split(':')[1].split(',')
+                x, y = float(coords[0]), float(coords[1])
+                self.current_location.x = x
+                self.current_location.y = y
+                self.status = f"Moving to ({x}, {y})"
+                self.get_logger().info(f'Moving to ({x}, {y})')
+            except (ValueError, IndexError):
+                self.get_logger().error('Invalid move command format')
+    
+    def move_to_location_callback(self, request, response):
+        # In a real system, this would initiate navigation
+        self.status = "Navigating"
+        response.success = True
+        response.message = "Navigation started"
+        self.get_logger().info('Navigation service called')
+        return response
+    
+    def publish_status(self):
+        status_msg = String()
+        status_msg.data = f"Status: {self.status}, Location: ({self.current_location.x}, {self.current_location.y})"
+        self.status_publisher.publish(status_msg)
+        
+        self.location_publisher.publish(self.current_location)
+```
+
+### 2. Launch File
+
+Create a launch file to start the robot system:
+
+```python
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='robot_examples',
+            executable='robot_node',
+            name='robot_node',
+            output='screen'
+        )
+    ])
+```
+
+### 3. Client Example
+
+Here's how to interact with the robot system:
+
+```python
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+from example_interfaces.srv import Trigger
+
+class RobotClient(Node):
+    def __init__(self):
+        super().__init__('robot_client')
+        
+        # Publisher to send commands
+        self.command_publisher = self.create_publisher(String, 'robot_commands', 10)
+        
+        # Service client for navigation
+        self.nav_client = self.create_client(Trigger, 'move_to_location')
+        
+        # Wait for service
+        while not self.nav_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Navigation service not available, waiting...')
+    
+    def send_command(self, command):
+        msg = String()
+        msg.data = command
+        self.command_publisher.publish(msg)
+        self.get_logger().info(f'Sent command: {command}')
+    
+    async def navigate(self):
+        request = Trigger.Request()
+        future = self.nav_client.call_async(request)
+        await future
+        result = future.result()
+        self.get_logger().info(f'Navigation result: {result.success}, {result.message}')
+```
+
+## Testing
+
+To test the robot system:
+
+1. Start the robot node:
+   ```bash
+   ros2 run robot_examples robot_node
+   ```
+
+2. Send commands from another terminal:
+   ```bash
+   ros2 topic pub /robot_commands std_msgs/String "data: 'start'"
+   ros2 topic pub /robot_commands std_msgs/String "data: 'move_to:5.0,3.0'"
+   ```
+
+3. Monitor the status:
+   ```bash
+   ros2 topic echo /robot_status
+   ```
+
+## Summary
+
+This chapter demonstrated how to build a complete robotic system using ROS 2 concepts. We combined nodes, topics, services, and proper state management to create a functional robot system.
+
+The key takeaways are:
+- Organize your robot system into logical nodes
+- Use appropriate communication patterns for different needs
+- Implement proper state management
+- Design for testability and modularity
+
+## References
+
+1. [ROS 2 Tutorials](https://docs.ros.org/en/rolling/Tutorials.html)
+2. [ROS 2 Best Practices](https://docs.ros.org/en/rolling/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html)
+3. [Robotics Systems Design](https://www.coursera.org/specializations/robotics)
+
+## Next Steps
+
+Continue to [Module 2: The Digital Twin (Gazebo & Unity)](/docs/module-2-digital-twin) to learn about simulation environments for robotics.

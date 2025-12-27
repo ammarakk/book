@@ -1,0 +1,130 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* You can override the default Docusaurus variables here. */
+:root {
+  /* Neon Robotic Theme Colors */
+  --ifm-color-primary: #00eeff; /* Bright cyan */
+  --ifm-color-primary-dark: #00ccdd; /* Darker cyan */
+  --ifm-color-primary-darker: #00b8c4; /* Even darker cyan */
+  --ifm-color-primary-darkest: #0099a3; /* Darkest cyan */
+  --ifm-color-primary-light: #33f0ff; /* Lighter cyan */
+  --ifm-color-primary-lighter: #66f3ff; /* Even lighter cyan */
+  --ifm-color-primary-lightest: #99f7ff; /* Lightest cyan */
+  
+  /* Additional neon colors */
+  --neon-purple: #b366ff;
+  --neon-pink: #ff66b2;
+  --neon-blue: #6666ff;
+  --neon-green: #66ff99;
+  
+  /* Dark background for contrast */
+  --ifm-background-color: #0a0a0a;
+  --ifm-background-surface-color: #111111;
+  
+  /* Text colors */
+  --ifm-font-color-base: #f0f0f0;
+  --ifm-font-color-base-inverse: #0a0a0a;
+  
+  /* Code block colors */
+  --docusaurus-highlighted-code-line-bg: rgba(0, 238, 255, 0.1);
+}
+
+/* For dark mode */
+html[data-theme='dark'] {
+  --ifm-background-color: #0a0a0a;
+  --ifm-background-surface-color: #111111;
+  --ifm-font-color-base: #f0f0f0;
+}
+
+/* Custom styles for the Physical AI & Humanoid Robotics book */
+
+/* Neon glow effects */
+.neon-glow {
+  text-shadow: 
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 15px #00eeff,
+    0 0 20px #00eeff,
+    0 0 25px #00eeff,
+    0 0 30px #00eeff,
+    0 0 35px #00eeff;
+}
+
+/* Animated neon glow */
+@keyframes neon-pulse {
+  0% { text-shadow: 0 0 5px #fff, 0 0 10px #00eeff; }
+  50% { text-shadow: 0 0 10px #fff, 0 0 20px #00eeff, 0 0 30px #00eeff, 0 0 40px #00eeff; }
+  100% { text-shadow: 0 0 5px #fff, 0 0 10px #00eeff; }
+}
+
+.neon-pulse {
+  animation: neon-pulse 2s infinite alternate;
+}
+
+/* Custom header styles */
+.navbar {
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--ifm-color-primary);
+}
+
+/* Custom card styles */
+.card {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-primary);
+  box-shadow: 0 0 10px rgba(0, 238, 255, 0.3);
+}
+
+/* Custom button styles */
+.button {
+  border: 1px solid var(--ifm-color-primary);
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  box-shadow: 0 0 15px var(--ifm-color-primary);
+  transform: translateY(-2px);
+}
+
+/* Code block styling */
+.code-block {
+  border-left: 3px solid var(--ifm-color-primary);
+}
+
+/* Sidebar styling */
+.menu {
+  border-right: 1px solid var(--ifm-color-primary);
+}
+
+/* Footer styling */
+.footer {
+  background: var(--ifm-background-surface-color);
+  border-top: 1px solid var(--ifm-color-primary);
+}
+
+/* Table styling */
+.table-wrapper {
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 4px;
+}
+
+/* Blockquote styling */
+blockquote {
+  border-left: 3px solid var(--neon-purple);
+  background-color: rgba(179, 102, 255, 0.05);
+}
+
+/* Links styling */
+a {
+  color: var(--ifm-color-primary);
+}
+
+a:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 8px var(--ifm-color-primary);
+}

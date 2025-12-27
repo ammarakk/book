@@ -1,0 +1,17 @@
+.footer {
+  background-color: var(--ifm-background-surface-color);
+  border-top: 1px solid var(--ifm-color-primary);
+  padding: 2rem 0;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-color-primary-light);
+  color: var(--ifm-color-primary-light);
+}
+
+.copyright p {
+  margin: 0.25rem 0;
+}
